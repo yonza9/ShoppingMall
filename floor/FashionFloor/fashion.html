@@ -1,0 +1,1083 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+<!-- stars -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!--ChartJS library-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<!--Save chart as PDF-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="ajax.js"></script>
+<script type="text/javascript" src="padini.js"></script>
+<script type="text/javascript" src="f21.js"></script>
+
+
+<style>
+.floor
+{
+  height: 900px;
+  width: 1800px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.hnm
+{
+	width:15%;
+	position: absolute;
+	top:20px;
+	left:40px;
+}
+
+
+.controlChart{
+  height: 800px; 
+  width: 1200px;
+
+}
+
+.chart-container {
+  position: relative;
+  margin: auto;
+  height: 80vh;
+  width: 80vw;
+}
+
+
+.checked{
+  color: orange;
+}
+
+.picsize{
+  width: 100%;
+  height: 60%;
+}
+
+.tooltip-inner {
+  background-color: #d3d3d3 !important;
+}
+
+.img-thumbnail {
+  height: 150px; 
+  width: 150px;
+}
+
+.modal {
+  overflow-y: auto;
+}
+
+.modal-full {
+    min-width: 100%;
+    margin: 0;
+}
+
+.modal-full .modal-content {
+    min-height: 100vh;
+}
+
+.fixed{
+  position: static;
+
+}
+
+.center {
+    margin: auto;
+    width: 90%;
+    padding: 10px;
+}
+</style>
+
+
+<title>1st Floor</title>
+</head>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-warning">
+  <a class="navbar-brand active" href="#">Fashion (1st Floor)</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="../../index.html">Home</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Floor Selection
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="../FastFoodFloor/fastfood.php">Ground Floor</a>
+          <a class="dropdown-item" href="../FashionFloor/fashion.html">1st Floor</a>
+          <a class="dropdown-item" href="../GadgetFloor/gadget.php">2nd Floor</a>
+        </div>
+      </li>      
+    </ul>    
+  </div>
+</nav>
+
+<body>
+  
+<!--All Retail stores Money Spent by Customer-->
+<div class="modal" id="comparisonMoney" tabindex="-1" role="dialog">
+  <div class="modal-dialog  modal-full">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+          Comparison amount of money spend by customer between Retail Stores
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body"> 
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+              <h4>H&M Store</h4>
+              <canvas id="compmoneyspendCht" width="250" height="250"></canvas>
+            </div>
+            <div class="col-sm">
+              <h4>Padini Concept Store</h4>
+              <canvas id="comppadMoneyCht" width="250" height="250"></canvas>
+            </div>
+            <div class="col-sm">
+              <h4>Forever21 Store</h4>
+              <canvas id="compf21MoneyCht" width="250" height="250"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--All Retail stores Customer footfall-->
+<div class="modal" id="comparisonVisit" tabindex="-1" role="dialog">
+  <div class="modal-dialog  modal-full">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+          Comparison of time spend by customer in Retail Stores
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body"> 
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+              <h4>H&M Store</h4>
+              <canvas id="comptimespendCht" width="250" height="250"></canvas>
+            </div>
+            <div class="col-sm">
+              <h4>Padini Concept Store</h4>
+              <canvas id="comppadTimeCht" width="250" height="250"></canvas>
+            </div>
+            <div class="col-sm">
+              <h4>Forever21 Store</h4>
+              <canvas id="compf21TimeCht" width="250" height="250"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    
+      </div>
+
+    </div>
+  </div>
+</div>
+
+ 
+<div class="floor center" style="background-image: url('picture/Floor.png');"> 
+ 
+ 	<div id="d1" data-toggle="modal" data-target="#f21">
+		<img id="m1" src="picture/marker-icon.png" style="transform: translate(300px, 380px); " data-toggle="tooltip" data-placement="top" /> 
+	</div>
+
+	<div data-toggle="modal" data-target="#hnm">
+		<img id="m2" src="picture/marker-icon.png" style="transform: translate(400px, 180px); " data-toggle="tooltip" data-placement="top" /> 
+	</div>
+	
+	<div data-toggle="modal" data-target="#padini">
+		<img id="m3" src="picture/marker-icon.png" style="transform: translate(1050px, 140px); " data-toggle="tooltip" data-placement="top" />
+	</div>
+</div>
+ 
+ 
+<!--Retail Shop Modal  -->
+<div class="modal" id="hnm" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+        	H&M 
+        	<img src="picture/HNM.jpg" height="700" width="1200" class="img-fluid" alt="Responsive image">
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <p><strong>Location: </strong>OB5.G.1</p> 
+        <p><strong>Product Variety: </strong>Men, Women, Kids, Accessories
+          &nbsp&nbsp
+          <input type="button" class="btn btn-outline-info btn-sm" value="View" data-toggle="modal" data-target="#prodvarcht">
+        </p>
+        <p><strong>Staff Service: &nbsp&nbsp
+          <input type="button" data-toggle="modal" data-target="#staffService" class="btn btn-outline-info btn-sm" value="Reviews"></p>
+        <p><strong>Store Environment (Ambience): </strong>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star"></span>
+          &nbsp&nbsp
+          <a id="avgAmb"></a>
+          &nbsp&nbsp
+          <input type="button" data-toggle="modal" data-target="#storeAmbcht" class="btn btn-outline-info btn-sm" value="Reviews">
+        </p> 
+        <p><strong>Product Quality: </strong>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star-half-o checked"></span>
+          <span class="fa fa-star"></span>
+          &nbsp&nbsp
+          <a id="avgProd"></a>
+          &nbsp&nbsp
+          <input type="button" data-toggle="modal" data-target="#prodquality" class="btn btn-outline-info btn-sm" value="Reviews">
+        </p> 
+    
+         
+         <button type="button" data-toggle="modal" data-target="#timespend" class="btn btn-primary">Customer Visits</button>
+         <button type="button" data-toggle="modal" data-target="#moneyXage" class="btn btn-primary">Customer Spending</button>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    
+      </div>
+
+    </div>
+  </div>    
+</div>
+
+<div class="modal" id="padini" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+          Padini Concept Store 
+          <img class="picsize" src="picture/padiniShop.jpg" class="img-fluid" alt="Responsive image">
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <p><strong>Location: </strong> OB5.F.1</p> 
+        <p><strong>Product Variety: </strong> Men, Women, Kids, Accessories
+          &nbsp&nbsp
+          <input type="button" class="btn btn-outline-info btn-sm" value="View" data-toggle="modal" data-target="#padProd">
+        </p>
+        <p><strong>Staff Service: </strong>&nbsp&nbsp
+          <input type="button" data-toggle="modal" data-target="#padService"  class="btn btn-outline-info btn-sm" value="Reviews"></p>
+        <p><strong>Store Environment (Ambience): </strong>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star-half-o checked"></span>
+          <span class="fa fa-star"></span>
+          &nbsp&nbsp
+          <a id="padavgAmb"></a>
+          &nbsp&nbsp
+          <input type="button" data-toggle="modal" data-target="#padAmb" class="btn btn-outline-info btn-sm" value="Reviews">
+        </p> 
+        <p><strong>Product Quality: </strong>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star-half-o checked"></span>
+          <span class="fa fa-star"></span>
+          &nbsp&nbsp
+          <a id="padavgProd"></a>
+          &nbsp&nbsp
+          <input type="button" data-toggle="modal" data-target="#padQuality" class="btn btn-outline-info btn-sm" value="Reviews">
+        </p> 
+    
+         
+         <button type="button" data-toggle="modal" data-target="#padTime" class="btn btn-primary">Customer Visits</button>
+         <button type="button" data-toggle="modal" data-target="#padMoney" class="btn btn-primary">Customer Spending</button>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="f21" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+          FOREVER21
+          <img class="picsize" src="picture/for21.jpg" class="img-fluid" alt="Responsive image">
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <p><strong>Location: </strong>G1.103</p> 
+        <p><strong>Product Variety: </strong>Men, Women, Kids, Accessories
+          &nbsp&nbsp
+          <input type="button" class="btn btn-outline-info btn-sm" value="View" data-toggle="modal" data-target="#f21Prod">
+        </p>
+        <p><strong>Staff Service: </strong>&nbsp&nbsp
+          <input type="button" data-toggle="modal" data-target="#f21Service"  class="btn btn-outline-info btn-sm" value="Reviews"></p>
+        <p><strong>Store Environment (Ambience): </strong>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+          &nbsp&nbsp
+          <a id="f21avgAmb"></a>
+          &nbsp&nbsp
+          <input type="button" data-toggle="modal" data-target="#f21Amb" class="btn btn-outline-info btn-sm" value="Reviews">
+        </p> 
+        <p><strong>Product Quality: </strong>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+          &nbsp&nbsp
+          <a id="f21avgProd"></a>
+          &nbsp&nbsp
+          <input type="button" data-toggle="modal" data-target="#f21Quality" class="btn btn-outline-info btn-sm" value="Reviews">
+        </p> 
+    
+         <button type="button" data-toggle="modal" data-target="#f21Time" class="btn btn-primary">Customer Visits</button>
+         <button type="button" data-toggle="modal" data-target="#f21Money" class="btn btn-primary">Customer Spending</button>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!--HNM Charts -->
+<!--Product Variety -->
+<div class="modal" id="prodvarcht" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+           Product Variety
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        
+        <canvas id="prodvar" width="320" height="160"></canvas>
+
+        <script>
+        var ctx = document.getElementById('prodvar').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'doughnut',
+
+            // The data for our dataset
+            data: {
+                labels: ["Mens", "Women", "Kid and Baby", "Accessories"],
+                datasets: [{                                        
+                    backgroundColor: ["rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(255, 205, 86)"],
+                    
+                    data: [11, 13, 8, 12],
+                }]
+            },
+            
+        });
+        </script>
+       
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--Staff service -->
+<div class="modal" id="staffService" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+           Staff Service toward Customers
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <canvas id="staffSerCht" width="320" height="160"></canvas>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--Product Quality -->
+<div class="modal" id="prodquality" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+           Product Quality Reviews
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body"> 
+        <canvas id="prodqualitycht" width="320" height="160"></canvas>
+        <a href="#" onclick="downloadPDF('prodqualitycht')">Save Chart</a>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--Store Ambience -->
+<div class="modal" id="storeAmbcht" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+           Store Environment
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <canvas id="storeAmb" width="320" height="160"></canvas>
+        <br><br>  
+        <a href="#" onclick="downloadPDF('storeAmb')">Save Chart</a>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--Time Spent by Customer -->
+<div class="modal" id="timespend" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+           Time spend by Customer in Store Analytics
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <canvas id="timespendCht"></canvas>
+        <br><br>  
+        <a href="#" onclick="downloadPDF('timespendCht')">Save Chart</a>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--Money Spent by Customer-->
+<div class="modal" id="moneyXage" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+           Amount of money spend in Store Analytics
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">    
+        <canvas id="moneyspendCht"></canvas>
+        <br><br>  
+        <a href="#" onclick="downloadPDF('moneyspendCht')">Save Chart</a>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<!--Padini Charts -->
+<!--Product Variety -->
+<div class="modal" id="padProd" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+           Product Variety
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        
+        <canvas id="padProdcht" width="320" height="160"></canvas>
+
+        <script>
+        var ctx = document.getElementById('padProdcht').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'doughnut',
+
+            // The data for our dataset
+            data: {
+                labels: ["Mens", "Women", "Kid and Baby", "Accessories"],
+                datasets: [{                                        
+                    backgroundColor: ["rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(255, 205, 86)"],
+                    
+                    data: [10, 14, 12, 12],
+                }]
+            },
+            
+        });
+        </script>
+       
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--Staff service -->
+<div class="modal" id="padService" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+           Staff Service toward Customers
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <canvas id="padServiceCht" width="320" height="160"></canvas>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--Product Quality -->
+<div class="modal" id="padQuality" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+           Product Quality Reviews
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body"> 
+        <canvas id="padQualityCht" width="320" height="160"></canvas>
+        <a href="#" onclick="downloadPDF('padQualityCht')">Save Chart</a>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--Store Ambience -->
+<div class="modal" id="padAmb" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+           Store Environment
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <canvas id="padAmbCht" width="320" height="160"></canvas>
+        <br><br>  
+        <a href="#" onclick="downloadPDF('padAmbCht')">Save Chart</a>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--Time Spent by Customer -->
+<div class="modal" id="padTime" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+           Time spend by Customer in Store Analytics
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <canvas id="padTimeCht"></canvas>
+        <br><br>  
+        <a href="#" onclick="downloadPDF('padTimeCht')">Save Chart</a>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--Money Spent by Customer-->
+<div class="modal" id="padMoney" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+           Amount of money spend in Store Analytics
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">    
+        <canvas id="padMoneyCht"></canvas>
+        <br><br>  
+        <a href="#" onclick="downloadPDF('padMoneyCht')">Save Chart</a>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!--Forever21 Charts -->
+<!--Product Variety -->
+<div class="modal" id="f21Prod" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+           Product Variety
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        
+        <canvas id="f21ProdCht" width="320" height="160"></canvas>
+
+        <script>
+        var ctx = document.getElementById('f21ProdCht').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'doughnut',
+
+            // The data for our dataset
+            data: {
+                labels: ["Mens", "Women", "Kid and Baby", "Accessories"],
+                datasets: [{                                        
+                    backgroundColor: ["rgb(255, 99, 132)","rgb(54, 162, 235)","rgb(255, 205, 86)"],
+                    
+                    data: [8, 15, 6, 12],
+                }]
+            },
+            
+        });
+        </script>
+       
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--Staff service -->
+<div class="modal" id="f21Service" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+           Staff Service toward Customers
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <canvas id="f21ServiceCht" width="320" height="160"></canvas>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--Product Quality -->
+<div class="modal" id="f21Quality" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+           Product Quality Reviews
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body"> 
+        <canvas id="f21QualityCht" width="320" height="160"></canvas>
+        <a href="#" onclick="downloadPDF('f21QualityCht')">Save Chart</a>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--Store Ambience -->
+<div class="modal" id="f21Amb" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+           Store Environment
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <canvas id="f21AmbCht" width="320" height="160"></canvas>
+        <br><br>  
+        <a href="#" onclick="downloadPDF('f21AmbCht')">Save Chart</a>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--Time Spent by Customer -->
+<div class="modal" id="f21Time" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+           Time spend by Customer in Store Analytics
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <canvas id="f21TimeCht"></canvas>
+        <br><br>  
+        <a href="#" onclick="downloadPDF('f21TimeCht')">Save Chart</a>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--Money Spent by Customer-->
+<div class="modal" id="f21Money" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <h5 class="modal-title">
+           Amount of money spend in Store Analytics
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">    
+        <canvas id="f21MoneyCht"></canvas>
+        <br><br>  
+        <a href="#" onclick="downloadPDF('f21MoneyCht')">Save Chart</a>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>    
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+
+    var modal_counter = 0;
+
+    $(document).ready(function(){
+
+      //Modal Vertical Scroll Bar Adjustment Start Here
+      $('.modal').on('shown.bs.modal', function () {
+          modal_counter++;
+      });
+      $('.modal').on('hidden.bs.modal', function () {
+          modal_counter--;
+          if(modal_counter == 1){
+              $('body').addClass('modal-open');
+          }
+          else{
+              $('body').removeClass('modal-open');
+          }
+      });
+      //Modal Vertical Scroll Bar Adjustment End Here 
+
+      //Insert your logo picture src here (must be in square size)
+      $("#m1").tooltip({title: "<img class='img-thumbnail' src='' alt='Logo' />", html: true}); 
+      $("#m2").tooltip({title: "<img class='img-thumbnail' src='' alt='Logo' />", html: true}); 
+      $("#m3").tooltip({title: "<img class='img-thumbnail' src='' alt='Logo' />", html: true}); 
+      
+    });
+
+    function downloadPDF(chartName) {
+        var fnChart = "#" + chartName;
+        
+        var newCanvas = document.querySelector(fnChart);
+
+      //create image from dummy canvas
+        var newCanvasImg = newCanvas.toDataURL("image/png", 1.0);
+      
+        //creates PDF from img
+        var doc = new jsPDF('landscape');
+        doc.setFontSize(20);
+        doc.text(15, 15, "Chart");
+        doc.addImage(newCanvasImg, 'png', 10, 10, 280, 150 );
+        doc.save(chartName + '.pdf');
+    }
+
+    //Floor Size Adjustment Start Here
+    var floorName = ".floor";
+
+    var floor = {
+      width: 1800,
+      height: 900,  
+      heightRatio: 900/1800,
+      marker_id: ["#m1", "#m2", "#m3"],
+      marker_x: [
+      parseInt($("#m1").css('transform').split(',')[4]),
+      parseInt($("#m2").css('transform').split(',')[4]),
+      parseInt($("#m3").css('transform').split(',')[4])
+      ],
+      marker_y: [
+      parseInt($("#m1").css('transform').split(',')[5]),
+      parseInt($("#m2").css('transform').split(',')[5]),
+      parseInt($("#m3").css('transform').split(',')[5])
+      ]
+    };
+
+    function changeFloorSize() {
+
+      var window_width = $(window).width();
+      var window_height = $(window).height();
+
+      var width, height;
+      var width_diff = floor.width - window_width;
+      var move_x = (width_diff > 0) ? true : false; 
+
+      if(move_x) {
+        width = window_width;
+        height = floor.height - (width_diff * floor.heightRatio);
+      } else {
+        width = floor.width;
+        height = floor.height;
+      }
+
+      $(floorName).css({
+        "width": width,
+        "height": height
+      });
+
+      var x = new Array(3);
+      var y = new Array(3);
+      var transform;
+      
+      for (var i = 0; i < 3; i++) {
+        if(move_x) {
+          x[i] = moveMarker(floor.marker_x[i], width / floor.width);
+          y[i] = moveMarker(floor.marker_y[i], height / floor.height);
+        } else {
+          x[i] = floor.marker_x[i];
+          y[i] = floor.marker_y[i];
+        }
+
+        transform = x[i] + "px, " + y[i] + "px";
+        $(floor.marker_id[i]).css('transform', 'translate(' + transform + ')');
+      }
+    }
+
+    function moveMarker(value, ratio) {
+      var result = 0;
+      result = parseInt(value * ratio);
+      return result;
+    }
+
+    window.addEventListener('resize', changeFloorSize);
+    changeFloorSize();
+    //Floor Size Adjustment End Here
+
+</script>
+
+
+</body>
+</html>
+
